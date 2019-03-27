@@ -34,7 +34,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
 //        recordingLabel.text = "Recording In Progress"
 //        stopRecordingButton.isEnabled = true
 //        recordButton.isEnabled = false
-        configuringUI(recordingState: true)
+        configuringUI(true)
         let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let recordingName = "recordedVoice.wav"
         let pathArray = [dirPath, recordingName]
@@ -50,24 +50,27 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
 
     }
     
-    // 
-    func configuringUI(recordingState: Bool){
-        if recordingState == true {
-            recordingLabel.text = "Recording In Progress"
-            stopRecordingButton.isEnabled = true
-            recordButton.isEnabled = false
-        } else {
-            recordingLabel.text = "Tap to Record"
-            recordButton.isEnabled = true
-            stopRecordingButton.isEnabled = false
-        }
+
+    func configuringUI(_ isRecording: Bool = false){
+        recordingLabel.text = isRecording ? "Recording In Progress": "Tap to Record"
+        stopRecordingButton.isEnabled = isRecording
+        recordButton.isEnabled = !isRecording
+//        if isRecording == true {
+//            recordingLabel.text = "Recording In Progress"
+//            stopRecordingButton.isEnabled = true
+//            recordButton.isEnabled = false
+//        } else {
+//            recordingLabel.text = "Tap to Record"
+//            recordButton.isEnabled = true
+//            stopRecordingButton.isEnabled = false
+//        }
     }
     
     @IBAction func stopRecording(_ sender: Any) {
 //        recordingLabel.text = "Tap to Record"
 //        recordButton.isEnabled = true
 //        stopRecordingButton.isEnabled = false
-        configuringUI(recordingState: false)
+        configuringUI(false)
         audioRecorder.stop()
         
         let audioSession = AVAudioSession.sharedInstance()
